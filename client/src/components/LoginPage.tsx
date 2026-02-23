@@ -56,7 +56,6 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
-              required
             />
           </div>
           {error && <div style={styles.error}>{error}</div>}

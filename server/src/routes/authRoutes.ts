@@ -10,8 +10,8 @@ const SALT_ROUNDS = 10;
 router.post("/login", async (req: Request, res: Response) => {
   try {
     const { code, password } = req.body;
-    if (!code || !password) {
-      res.status(400).json({ error: "User code and password are required" });
+    if (!code) {
+      res.status(400).json({ error: "User code is required" });
       return;
     }
 
@@ -38,6 +38,12 @@ router.post("/login", async (req: Request, res: Response) => {
     // Check if password has been set (FLEXTEXT3)
     if (!employee.FLEXTEXT3) {
       res.json({ needsPasswordSetup: true, code: employee.CODE });
+      return;
+    }
+
+    // Password is required for users who have set one
+    if (!password) {
+      res.status(400).json({ error: "Password is required" });
       return;
     }
 
